@@ -8,7 +8,7 @@ std::cout<<endl<<"Press any key to add Students details";
 getchar();
 ofstream file(filename.c_str(), ios::app);
 char name[50];
-std::cout<<endl<<"\n Enter Student's Name: ";
+std::cout<<endl<<"\n Enter Student Name: ";
 fgets(name, 50, stdin);
 
 file<<endl<<name;
@@ -28,7 +28,7 @@ int college_tuition;
 cout<<endl<<"Enter Tution: ";
 cin>>college_tuition;
 
-char health_plan_status;
+char health_lan_status;
 cout<<endl<<"Do you wish to enroll in a Health Plan? y/n : ";
 cin>>health_plan_status;
 
