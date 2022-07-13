@@ -1,20 +1,15 @@
 #include <iostream>
 #include <fstream>
-#include<string>
+#include <string>
 using namespace std;
 
-/*
-this function add student record to text file
-Argument1: filename
-Argument2: Pointer to studentCount
-*/
-void addStudent(string filename, int *studentCount, int *inStateFees, int *outStateFees){
-cout<<endl<<"Press any key to add Students details";
+void addStudent(string filename, int *student_count, int *in_state_fees, int *out_of_state_fees){
+std::cout<<endl<<"Press any key to add Students details";
 getchar();
 ofstream file(filename.c_str(), ios::app);
 char name[50];
-cout<<endl<<"\n Enter Name of Student : ";
-gets(name);
+std::cout<<endl<<"\n Enter Student's Name: ";
+fgets(name, 50, stdin);
 
 file<<endl<<name;
 
@@ -29,36 +24,36 @@ file<<" | Out-Of-State";
 else
 file<<" | NA";
 
-int tutionFees;
-cout<<endl<<"Enter Tution Fees : ";
-cin>>tutionFees;
+int college_tuition;
+cout<<endl<<"Enter Tution: ";
+cin>>college_tuition;
 
-char choice;
-cout<<endl<<"Do you want to enroll for Health Plan ? y/n : ";
-cin>>choice;
+char health_plan_status;
+cout<<endl<<"Do you wish to enroll in a Health Plan? y/n : ";
+cin>>health_plan_status;
 
 int healthPlan = 0;
 
-if(choice=='Y' || choice=='y'){
+if(health_plan_status=='Y' || health_plan_status=='y'){
 char plan;
-cout<<endl<<" # Select Optional Health Plan #";
-cout<<endl<<"E -> $40";
-cout<<endl<<"S -> $160";
-cout<<endl<<"C -> $120";
+cout<<endl<<"# Choose Your Health Plan #";
+cout<<endl<<"E -> $50";
+cout<<endl<<"S -> $100";
+cout<<endl<<"C -> $150";
 cout<<endl<<"F -> $200";
 
-cout<<endl<<"Select any alphabet ( E, S, C, F ) : ";
+cout<<endl<<"Select any letter (A, B, C, D): ";
 cin>>plan;
 
 switch(plan){     	
-case 'E':
-case 'e': healthPlan = 40;   break;
-case 'S':
-case 's': healthPlan = 160; break;
+case 'A':
+case 'a': healthPlan = 40;   break;
+case 'B':
+case 'b': healthPlan = 160; break;
 case 'C':
 case 'c': healthPlan =  120; break;
-case 'F':
-case 'f' : healthPlan =  200; break;
+case 'D':
+case 'd' : healthPlan =  200; break;
 default: cout<<endl<<"Invalid Choice..";
 }
 
@@ -67,72 +62,64 @@ file<<" | Health Plan : "<<plan;
 else
 file<<" | Health Plan : None"<<plan;
 
-file<<" | "<<tutionFees;
+file<<" | "<<college_tuition;
 
 if(state==1){
-*inStateFees = *inStateFees + tutionFees + healthPlan;
+*in_state_fees = *in_state_fees + college_tuition + healthPlan;
 }
 else if(state==2){
-*outStateFees = *outStateFees + tutionFees + healthPlan;
+*out_of_state_fees = *out_of_state_fees + college_tuition + healthPlan;
 }
 
 }
-*studentCount = *studentCount + 1;
+*student_count = *student_count++;
 file.close();
 }
 
-/*
-function generate the final report by adding total fees details
-Argument1: filename
-Argument2: Pointer to studnetCount
-*/
-void generateReport(const string filename, const int *studentCount, const int *inStateFees, const int *outStateFees){
-if(*studentCount==0){
+void generateReport(const string filename, const int *student_count, const int *in_state_fees, const int *out_of_state_fees){
+if(*student_count==0){
 cout<<endl<<"Error: There should be atleast one record to generate report.";
 }
 else{
 ofstream file(filename.c_str(), ios::app);
-file<<endl<<"Total Tuition Paid for all In-State Students : "<<*inStateFees;
-file<<endl<<"Total Tuition Paid for all Out-of-State Students : "<<*outStateFees;
+file<<endl<<"Total Tuition Paid for all In-State Students : "<<*in_state_fees;
+file<<endl<<"Total Tuition Paid for all Out-of-State Students : "<<*out_of_state_fees;
 file.close();
 cout<<endl<<"Success: "<<filename<<" generated ";		
 }
 	
 }
 
-
-//program runs from this function
 int main(int argc, char** argv) {
 	
-int choice = 0;
+int health_plan_status = 0;
 string fileName = "tuition_report.txt";
-int studentCount =0;
-int inStateFees = 0;
-int outStateFees =0;
+int student_count = 0;
+int in_state_fees = 0;
+int out_of_state_fees = 0;
 
-//empty file if it already exist
+
 ofstream file(fileName.c_str(), ios::out);
 file.close();
 
-while(choice!=-1){
+while(health_plan_status!=-1){
 cout<<endl<<"## (College Student Tuition) ##"<<endl;
 cout<<endl<<"1 Add Student Details";
 cout<<endl<<"2 Generate Report";
 cout<<endl<<"-1 Exit";
 cout<<"\n\n Enter your choice : ";
-cin>>choice;
+cin>>health_plan_status;
 
-switch(choice){
-case 1: addStudent(fileName, &studentCount, &inStateFees, &outStateFees);
+switch(health_plan_status){
+case 1: addStudent(fileName, &student_count, &in_state_fees, &out_of_state_fees);
 	break;
-case 2: generateReport(fileName, &studentCount, &inStateFees, &outStateFees);
+case 2: generateReport(fileName, &student_count, &in_state_fees, &out_of_state_fees);
 	break;
-case -1: cout<<endl<<"thank you for useing softwer!!";
+case -1: cout<<endl<<"Thank you";
 	break;
-default: cout<<endl<<"Invalid Choice.."; getchar();
+default: cout<<endl<<"Invalid Choice"; getchar();
 	
-}
-	
+}	
 }
 
 return 0;
